@@ -56,13 +56,13 @@ public class PassportController {
     @ResponseBody
     public String verify(HttpServletRequest request){
         // 取得token
-        String  token = request.getParameter("token");
+        String  token =     request.getParameter("token");
         String  currentIp = request.getParameter("currentIp");
         System.out.println("currentIp======="+currentIp);
         //  salt = ip  currentIp
         String salt = request.getHeader("X-forwarded-for");
         // 对token进行解密 {userId=1001, nickName=admin}
-        Map<String, Object> map = JwtUtil.decode(token,key, salt);
+        Map<String, Object> map = JwtUtil.decode(token,key,salt);
         // map 中的userId 。跟redis 中进行匹配。
         if (map!=null && map.size()>0){
             String userId = (String) map.get("userId");

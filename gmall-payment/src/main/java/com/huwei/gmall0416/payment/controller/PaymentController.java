@@ -92,7 +92,6 @@ public class PaymentController {
 
     @RequestMapping(value = "/alipay/callback/return",method = RequestMethod.GET)
     public String callbackReturn(){
-        System.out.println("着反对撒顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶");
         return "redirect://"+AlipayConfig.return_order_url;
     }
 
@@ -109,6 +108,7 @@ public class PaymentController {
         String trade_status = paramMap.get("trade_status");
         if ("TRADE_SUCCESS".equals(trade_status) || "TRADE_FINISHED".equals(trade_status)){
             // 查单据是否处理
+            //订单编号
             String out_trade_no = paramMap.get("out_trade_no");
             PaymentInfo paymentInfo = new PaymentInfo();
             paymentInfo.setOutTradeNo(out_trade_no);

@@ -38,11 +38,11 @@ public class CartController {
         // 判断用户是否登录
         if (userId != null) {
             // 说明用户已登录
-            cartService.addToCart(skuId, userId, Integer.parseInt(skuNum));
+            cartService.addToCart(skuId, userId,Integer.parseInt(skuNum));
         } else {
             // 说明用户没有登录没有登录放到cookie中
             //cartCookieHandler:保存cookie的类
-            cartCookieHandler.addToCart(request, response, skuId, userId, Integer.parseInt(skuNum));
+            cartCookieHandler.addToCart(request,response, skuId, userId,Integer.parseInt(skuNum));
         }
         // 取得sku信息对象
         SkuInfo skuInfo = manageService.getSkuInfo(skuId);

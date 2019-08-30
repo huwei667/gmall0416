@@ -86,7 +86,5 @@ public class CartCookieHandler{
         String newCartJson = JSON.toJSONString(cartList);
         CookieUtil.setCookie(request,response,cookieCartName,newCartJson,COOKIE_CART_MAXAGE,true);
 
-
-
     }
 }

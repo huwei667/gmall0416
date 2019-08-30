@@ -17,6 +17,8 @@ public class OrderConsumer {
     @Reference
     private OrderService orderService;
 
+
+    //监控订单消息
     @JmsListener(destination="PAYMENT_RESULT_QUEUE",containerFactory = "jmsQueueListener")
     public void  consumerPaymentResult(MapMessage mapMessage) throws JMSException {
         // 取得消息队列中的数据
@@ -35,15 +37,14 @@ public class OrderConsumer {
             orderService.updateOrderStatus(orderId,ProcessStatus.UNPAID);
         }
       }
-    /*@JmsListener(destination="SKU_DEDUCT_QUEUE",containerFactory = "jmsQueueListener")
+    @JmsListener(destination="SKU_DEDUCT_QUEUE",containerFactory = "jmsQueueListener")
     public void consumeSkuDeduct(MapMessage mapMessage) throws JMSException {
         String orderId = mapMessage.getString("orderId");
         String  status = mapMessage.getString("status");
-        System.out.println("DEDUCTEDDEDUCTEDDEDUCTEDDEDUCTEDDEDUCTEDDEDUCTEDDEDUCTEDDEDUCTEDDEDUCTEDF");
         if("DEDUCTED".equals(status)){
             orderService.updateOrderStatus( orderId , ProcessStatus.DELEVERED);
         }else{
             orderService.updateOrderStatus( orderId , ProcessStatus.STOCK_EXCEPTION);
         }
-    }*/
+    }
 }

@@ -111,6 +111,4 @@ public class CookieUtil {
     public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String cookieName) {
         setCookie(request, response, cookieName, null, 0, false);
     }
-
-
 }

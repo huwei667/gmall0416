@@ -16,7 +16,7 @@ import java.util.Map;
 
 // 实现，继承 被spring容器扫描
 @Component
-public class AuthInterceptor extends HandlerInterceptorAdapter {
+public class AuthInterceptor extends HandlerInterceptorAdapter{
     // preHandle 进入控制器之前。
     public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
         // 将生产token 放入cookie 中

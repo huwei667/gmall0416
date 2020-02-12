@@ -24,11 +24,10 @@ public class PassportController {
 
     @RequestMapping("index")
     public String index(HttpServletRequest request){
-        //
         String originUrl = request.getParameter("originUrl");
         request.setAttribute("originUrl",originUrl);
-        // ctrl+alt+shift
-        return "index";
+        //ctrl+alt+shift
+         return "index";
     }
 
     @RequestMapping(value = "login")

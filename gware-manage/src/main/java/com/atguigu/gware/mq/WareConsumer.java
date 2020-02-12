@@ -54,7 +54,6 @@ public class WareConsumer {
     @JmsListener(destination = "ORDER_RESULT_QUEUE",containerFactory = "jmsQueueListener")
     public void receiveOrder(TextMessage textMessage) throws JMSException {
         String orderTaskJson = textMessage.getText();
-        System.out.println("ASDFFFFFFFFFFFFFFFFFFFF");
         WareOrderTask wareOrderTask = JSON.parseObject(orderTaskJson,WareOrderTask.class);
         wareOrderTask.setTaskStatus(TaskStatus.PAID);
         gwareService.saveWareOrderTask(wareOrderTask);

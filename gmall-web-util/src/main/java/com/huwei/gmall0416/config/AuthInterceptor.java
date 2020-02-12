@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
@@ -16,10 +15,11 @@ import java.util.Map;
 
 // 实现，继承 被spring容器扫描
 @Component
+//拦截器
 public class AuthInterceptor extends HandlerInterceptorAdapter{
     // preHandle 进入控制器之前。
     public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-        // 将生产token 放入cookie 中
+        // 将生产token放入cookie 中
         // http://item.gmall.com/32.html?newToken=eyJhbGciOiJIUzI1NiJ9.eyJuaWNrTmFtZSI6IkFkbWluaXN0cmF0b3IiLCJ1c2VySWQiOiIyIn0.WUvbFvXQnTMBGNyHWT-DE41MR9cn7c_W1oAtDAzb7VU
         String token = request.getParameter("newToken");
         if (token!=null){

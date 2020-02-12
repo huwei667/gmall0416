@@ -62,20 +62,24 @@ public class PaymentController {
         paymentInfo.setOutTradeNo(orderInfo.getOutTradeNo());
         paymentInfo.setTotalAmount(orderInfo.getTotalAmount());
         paymentInfo.setSubject("小米7支付");
+        //UNPAID :支付中
         paymentInfo.setPaymentStatus(PaymentStatus.UNPAID);
-        // 保存信息
         paymentService.savePaymentInfo(paymentInfo);
-        // 支付宝参数
 
+        // 支付宝参数
         AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();//创建API对应的request
         //  http://payment.gmall.com/alipay/callback/return
-        alipayRequest.setReturnUrl(AlipayConfig.return_payment_url);
+        alipayRequest.setReturnUrl(AlipayConfig.return_payment_url); //同步
         alipayRequest.setNotifyUrl(AlipayConfig.notify_payment_url);//在公共参数中设置回跳和通知地址
         // 声明一个Map
         Map<String,Object> bizContnetMap=new HashMap<>();
+        //out_trade_no:订单号
         bizContnetMap.put("out_trade_no",paymentInfo.getOutTradeNo());
+        //FAST_INSTANT_TRADE_PAY不要更改
         bizContnetMap.put("product_code","FAST_INSTANT_TRADE_PAY");
+        //商品名称
         bizContnetMap.put("subject",paymentInfo.getSubject());
+        //支付价格
         bizContnetMap.put("total_amount",paymentInfo.getTotalAmount());
         // 将map变成json
         String Json = JSON.toJSONString(bizContnetMap);
@@ -86,20 +90,28 @@ public class PaymentController {
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
+        //调用支付宝查询是否已经付款了  延迟队列
+        //paymentService.sendDelayPaymentResult(paymentInfo.getOutTradeNo(),15, 3);
         response.setContentType("text/html;charset=UTF-8");
         return form;
      }
-
+     //同步
     @RequestMapping(value = "/alipay/callback/return",method = RequestMethod.GET)
     public String callbackReturn(){
         return "redirect://"+AlipayConfig.return_order_url;
     }
-
+    //异步
     @RequestMapping(value = "/alipay/callback/notify",method = RequestMethod.POST)
     @ResponseBody
     public String paymentNotify(@RequestParam Map<String,String> paramMap, HttpServletRequest request) throws AlipayApiException {
         // 拿公用key+数据验证
         String sign = request.getParameter("sign");
+        /**
+         * paramMap :数据
+         * 公用key
+         * 字符集
+         * 算法
+         */
         boolean flag = AlipaySignature.rsaCheckV1(paramMap, AlipayConfig.alipay_public_key,"utf-8",AlipayConfig.sign_type);
         if (!flag){
             return "fial";
@@ -113,7 +125,7 @@ public class PaymentController {
             PaymentInfo paymentInfo = new PaymentInfo();
             paymentInfo.setOutTradeNo(out_trade_no);
             PaymentInfo paymentInfoHas = paymentService.getpaymentInfo(paymentInfo);
-
+            // PAID:已支付   ClOSED:已关闭
             if (paymentInfoHas.getPaymentStatus()==PaymentStatus.PAID || paymentInfoHas.getPaymentStatus()==PaymentStatus.ClOSED){
                 return "fail";
             }else {
@@ -125,7 +137,9 @@ public class PaymentController {
                 paymentInfoUpd.setCallbackTime(new Date());
                 // 设置内容
                 paymentInfoUpd.setCallbackContent(paramMap.toString());
+                //修改订单 outTradeNo
                 paymentService.updatePaymentInfo(out_trade_no,paymentInfoUpd);
+                //
                 sendPaymentResult(paymentInfo,"success");
                 return "success";
             }
@@ -137,6 +151,18 @@ public class PaymentController {
     @ResponseBody
     public String sendPaymentResult(PaymentInfo paymentInfo,@RequestParam("result") String result){
         paymentService.sendPaymentResult(paymentInfo,result);
-        return "sent payment result";
+        return "sentpaymentresult";
+    }
+    // 查询订单信息
+    @RequestMapping("queryPaymentResult")
+    @ResponseBody
+    public String queryPaymentResult(PaymentInfo paymentInfo){
+        //String orderId = request.getParameter("orderId");
+        //查询支付订单
+        paymentService.getpaymentInfo(paymentInfo);
+        PaymentInfo paymentInfoQuery = new PaymentInfo();
+       // paymentInfoQuery.setOrderId(orderId);
+        boolean flag = paymentService.checkPayment(paymentInfoQuery);
+        return ""+flag;
     }
 }

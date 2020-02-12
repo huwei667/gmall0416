@@ -24,8 +24,8 @@ public class JwtUtil {
         try {
             claims= Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
         } catch ( JwtException e) {
-            return null;
+        return null;
         }
         return  claims;
-    }
-}
+        }
+        }

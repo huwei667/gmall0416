@@ -73,7 +73,7 @@ public class GwareController {
     }
 
     //根据skuid 返回 仓库
-    @RequestMapping(value = "wareSkuMap"  )
+    @RequestMapping(value = "wareSkuMap")
     @ResponseBody
     public ResponseEntity<String> getWareSkuMap(@RequestParam("skuid") List<String> skuidsList){
        // List<String> skuidsList = JSON.parseArray(skuids, String.class) ;

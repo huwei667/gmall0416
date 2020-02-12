@@ -10,6 +10,9 @@ public interface PaymentService {
 
     void updatePaymentInfo(String out_trade_no, PaymentInfo paymentInfoUpd);
 
-    //支付成功调用接口
+    //手动支付成功调用接口
     public void sendPaymentResult(PaymentInfo paymentInfo,String result);
+
+    // 查询支付是否成功
+    public boolean checkPayment(PaymentInfo paymentInfoQuery) ;
 }

@@ -11,7 +11,6 @@ import org.apache.http.util.EntityUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @param
@@ -42,7 +41,6 @@ public class HttpClientUtil {
             httpclient.close();
         }catch (IOException e){
             e.printStackTrace();
-            return null;
         }
 
         return  null;

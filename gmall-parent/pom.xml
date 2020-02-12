@@ -35,6 +35,7 @@
 
 
         <jsoup.version>1.11.2</jsoup.version>
+
         <httpclient.version>4.5.5</httpclient.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <!--通用mapper集成springboot-->
@@ -128,6 +129,7 @@
                 <version>${mapper-starter.version}</version>
             </dependency>
 
+            <!--reids客户端-->
             <dependency>
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>

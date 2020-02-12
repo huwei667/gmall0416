@@ -205,14 +205,11 @@ public class ListServiceImpl implements ListService {
                 "}";
         // 更新操作
         Update build = new Update.Builder(update).index(ES_INDEX).type(ES_TYPE).id(skuId).build();
-
         // 执行操作
         try {
             jestClient.execute(build);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }

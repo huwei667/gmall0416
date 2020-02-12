@@ -94,14 +94,5 @@ public class OrderController {
     }
 
 
-    /*@RequestMapping("trade")
-    @ResponseBody
-    public List<UserAddress> trade(HttpServletRequest request){
 
-         String userId = request.getParameter("userId");
-
-         List<UserAddress> userAddressList=userInfoService.getUserAddressList(userId);
-
-         return  userAddressList;
-    }*/
 }

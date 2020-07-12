@@ -25,7 +25,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
         if (token!=null){
             // 将token 放入cookie 中
             CookieUtil.setCookie(request,response,"token",token,WebConst.COOKIE_MAXAGE,false);
-        }
+    }
         // 直接访问登录页面，当用户进入其他项目模块中。
         if (token==null){
             //  如果用户登录了，访问其他页面的时候不会有newToken，那么token 可能已经在cookie 中存在了

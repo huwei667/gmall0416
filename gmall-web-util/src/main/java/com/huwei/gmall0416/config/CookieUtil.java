@@ -13,7 +13,6 @@ import java.net.URLEncoder;
  */
 public class CookieUtil {
 
-
     public static String getCookieValue(HttpServletRequest request, String cookieName, boolean isDecoder) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null || cookieName == null){

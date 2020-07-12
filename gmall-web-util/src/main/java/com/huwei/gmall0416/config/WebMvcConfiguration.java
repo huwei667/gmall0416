@@ -12,6 +12,7 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
     AuthInterceptor authInterceptor;
 
     public void addInterceptors(InterceptorRegistry registry) {
+
         /*拦截所有 */
         registry.addInterceptor(authInterceptor).addPathPatterns("/**");
         super.addInterceptors(registry);
